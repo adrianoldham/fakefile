@@ -7,7 +7,8 @@ var FakeFile = Class.create({
         fileAddClass: "add",
         fileCancelClass: "cancel",
         setFileButtonPosition: true,
-        cleanOnFakeFileClick: true,
+        cleanOnFakeFileClick: false,
+        addOnFakeFileClick: true,
         onUpdate: function () {}
     },
 
@@ -29,7 +30,6 @@ FakeFile.Element = Class.create({
         this.options = Object.extend(Object.extend({ }, this.options), options || { });
         this.element = $(element);
         this.parent = $(parent);
-
         this.element = element.setOpacity(0);
         this.container = element.up();
         this.setupFakeFile();
@@ -93,6 +93,9 @@ FakeFile.Element = Class.create({
         if (this.options.cleanOnFakeFileClick) {
             this.fakeFile.observe('click', this.clean.bind(this));
         }
+        if (this.options.addOnFakeFileClick) {
+            this.fakeFile.observe('click', this.add.bind(this));
+        }
         this.fileCancel.observe('click', this.clean.bind(this));
         this.element.observe('change', this.dirty.bind(this));
     },
@@ -128,6 +131,9 @@ FakeFile.Element = Class.create({
 
         // Callback on update
         this.options.onUpdate();
-    }
+    },
 
+    add: function() {
+        this.element.click();
+    }
 });
