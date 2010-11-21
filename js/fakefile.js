@@ -98,23 +98,35 @@ FakeFile.Element = Class.create({
     },
 
     clean: function() {
-        // Set everything to indicate there is no file value
+        // Reset real and fake input values
         this.element.value = "";
         this.fakeFile.value = this.defaultText;
+
+        // Switch class to clean
         this.fakeFile.removeClassName(this.options.dirtyClass);
         this.fakeFile.addClassName(this.options.cleanClass);
+
+        // Switch visibility to show add button
         this.fileCancel.hide();
         this.fileAdd.show();
+
+        // Callback on update
         this.options.onUpdate();
     },
 
     dirty: function() {
-        // Set everything to indicate there is a file
+        // Set fake input value the same as the real input value
         this.fakeFile.value = this.element.value;
+
+        // Switch class to dirty
         this.fakeFile.removeClassName(this.options.cleanClass);
         this.fakeFile.addClassName(this.options.dirtyClass);
+
+        // Switch visibility to show cancel button
         this.fileCancel.show();
         this.fileAdd.hide();
+
+        // Callback on update
         this.options.onUpdate();
     }
 
